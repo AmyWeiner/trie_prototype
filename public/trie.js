@@ -41,7 +41,25 @@ Trie.prototype.getWords = function(words, currentWord){
   // contained in this Trie.
   // it will use currentWord as a prefix,
   // since a Trie doesn't know about its parents.
-  
+  if (typeof words == "undefined") {
+    words = [];
+  }
+
+  if (typeof currentWord == "undefined") {
+    currentWord = "";
+  }
+
+  var node = this;
+  if (node.isWord) {
+    words.push(currentWord);
+  }
+
+  for (var character in node.characters) {
+    if (node.characters.hasOwnProperty(character)) {
+      this.getWords.apply(node.characters[character], [words, currentWord + character]);
+    }
+  }
+  return words;
 };
 
 Trie.prototype.find = function(word, index){

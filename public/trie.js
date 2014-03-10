@@ -67,10 +67,44 @@ Trie.prototype.find = function(word, index){
   // which corresponds to the end of the passed in word.
 
   // Be sure to consider what happens if the word is not in this Trie.
+  var substring = "";
+  if (typeof index == "undefined") {
+    index = 0;
+  }
+
+  substring = word[index];
+  if (typeof this.characters[substring] == "undefined") {
+    return this.characters[substring];
+  }
+
+  if ((word.length - 1) == index) {
+    return this.characters[substring];
+  } else {
+    index ++;
+    return this.find.apply(this.characters[substring], [word, index]);
+  }
 };
 
 Trie.prototype.autoComplete = function(prefix){
   // This function will return all completions 
   // for a given prefix.
   // It should use find and getWords.
+  var foundNode = this.find(prefix);
+  if (typeof foundNode == "undefined") {
+    return [];
+  }
+  var words = foundNode.getWords();
+  for (var i = 0; i < words.length; i ++) {
+    words[i] = prefix + words[i];
+  }
+  return words;
 };
+
+
+
+
+
+
+
+
+

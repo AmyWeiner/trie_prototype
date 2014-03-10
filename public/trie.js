@@ -29,6 +29,10 @@ Trie.prototype.learn = function(word, index){
 
   if ((word.length - 1) == index) {
     this.characters[substring].isWord = true;
+    return;
+  } else {
+    index ++;
+    this.learn.apply(this.characters[substring], [word, index]);
   }
 };
 
@@ -37,6 +41,7 @@ Trie.prototype.getWords = function(words, currentWord){
   // contained in this Trie.
   // it will use currentWord as a prefix,
   // since a Trie doesn't know about its parents.
+  
 };
 
 Trie.prototype.find = function(word, index){

@@ -1,5 +1,6 @@
 Trie = function(){
   this.characters = {};
+  this.isWord = false;
 };
 
 Trie.prototype.learn = function(word, index){
@@ -16,6 +17,19 @@ Trie.prototype.learn = function(word, index){
   // A word does not necessarily end at a leaf.
   // You must mark nodes which are the ends of words,
   // so that the words can be reconstructed later.
+  var substring = "";
+  if (typeof index == "undefined") {
+    index = 0;
+  }
+
+  substring = word[index];
+  if (typeof this.characters[substring] == "undefined") {
+    this.characters[substring] = new Trie();
+  }
+
+  if ((word.length - 1) == index) {
+    this.characters[substring].isWord = true;
+  }
 };
 
 Trie.prototype.getWords = function(words, currentWord){
